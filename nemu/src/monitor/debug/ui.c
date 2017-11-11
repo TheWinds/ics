@@ -38,6 +38,7 @@ static int cmd_q(char *args) {
 
 static uint64_t str2uint64(char *str){
   uint64_t n=0;
+  printf("%d\n",str==NULL);  
   int lenStr=strlen(str);
   printf("%d\n",lenStr);
   for(int i=0;i<lenStr;i++){
