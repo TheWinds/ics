@@ -49,8 +49,11 @@ static uint64_t str2uint64(char *str){
 }
 
 static int cmd_si(char *args){
-  uint64_t n = str2uint64(args);
-  if(n==0) n=1;
+  char *arg=strtok(NULL," ");
+  uint64_t n=1;
+  if (arg!=NULL){
+      n = str2uint64(arg);
+  }
   cpu_exec(n);
 	return 0;
 }
