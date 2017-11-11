@@ -36,9 +36,20 @@ static int cmd_q(char *args) {
   return -1;
 }
 
+static uint64_t str2uint64(char *str){
+  uint64_t n=0;
+  int lenStr=strlen(str);
+  for(int i=0;i<lenStr;i++){
+      n+=str[i]-48;
+      if(i!=lenStr-1) n*=10;
+  }
+  return n;
+}
+
 static int cmd_si(char *args){
-  printf("lalala");
-	printf("%s",args);
+  uint64_t n = str2uint64(args);
+  if(n==0) n=1;
+  cpu_exec(n);
 	return 0;
 }
 
