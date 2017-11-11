@@ -38,9 +38,7 @@ static int cmd_q(char *args) {
 
 static uint64_t str2uint64(char *str){
   uint64_t n=0;
-  printf("%d\n",str==NULL);  
   int lenStr=strlen(str);
-  printf("%d\n",lenStr);
   for(int i=0;i<lenStr;i++){
       n+=str[i]-48;
       if(i!=lenStr-1) n*=10;
@@ -49,9 +47,11 @@ static uint64_t str2uint64(char *str){
 }
 
 static int cmd_si(char *args){
+  // get the first argument 
   char *arg=strtok(NULL," ");
   uint64_t n=1;
   if (arg!=NULL){
+      // parset string to unit64
       n = str2uint64(arg);
   }
   cpu_exec(n);
