@@ -66,7 +66,7 @@ static void print_cmd_info_usage(){
 
 static void print_registers_info(){
     for(int i=R_EAX;i<=R_EDI;i++){
-    printf("%s: 0x%032x\n",regsl[i],reg_b(i));  
+    printf("%s: 0x%0x\n",regsl[i],reg_b(i));  
 
     } 
 }
