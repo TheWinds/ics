@@ -66,7 +66,7 @@ static void print_cmd_info_usage(){
 
 static void print_registers_info(){
     for(int i=R_EAX;i<=R_EDI;i++){
-    printf("%s: 0x%x\n",regsl[i],reg_l(i));  
+    printf("%s: 0x%08x\n",regsl[i],reg_b(i));  
 
     } 
 }
@@ -78,11 +78,11 @@ static int cmd_info(char *args){
     return 0;
   }
 
-  if(strcmp(arg,"r")){
+  if(strcmp(arg,"r")==0){
     // print registers info 
     print_registers_info();
   }
-  else if(strcmp(arg,"w")){   
+  else if(strcmp(arg,"w")==0){   
     
   }else{
     print_cmd_info_usage();
