@@ -65,7 +65,10 @@ static void print_cmd_info_usage(){
 }
 
 static void print_registers_info(){
-    printf("%u",cpu.eax);  
+    for(int i=R_EAX;i<=R_EDI;i++){
+    printf("%s:%x\n",regsl[i],reg_l(i));  
+
+    } 
 }
 
 static int cmd_info(char *args){
