@@ -58,6 +58,35 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static void print_cmd_info_usage(){
+    printf("info usage:\n");
+    printf("  info r : print registers info \n");
+    printf("  info w : print watchpointer info \n");
+}
+
+static void print_registers_info(){
+    printf("%u",cpu.eax);  
+}
+
+static int cmd_info(char *args){
+  char *arg=strtok(NULL," ");
+  if(arg==NULL){
+    print_cmd_info_usage();
+    return 0;
+  }
+
+  if(strcmp(arg,"r")){
+    // print registers info 
+    print_registers_info();
+  }
+  else if(strcmp(arg,"w")){   
+    
+  }else{
+    print_cmd_info_usage();
+  }
+  return 0;  
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -69,6 +98,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","Step execute N instruction,si [N] ",cmd_si},
+  {"info","print registers or watchpointer information",cmd_info},
 
   /* TODO: Add more commands */
 
