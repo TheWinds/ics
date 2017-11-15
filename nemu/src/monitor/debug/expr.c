@@ -7,8 +7,14 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
-
+  TK_NOTYPE = 256,
+  TK_PLUS,TK_SUB,TK_MUL_DREF,TK_DIV,
+  TK_LEFT_PARENTHESES,
+  TK_RIGHT_PARENTHESES,
+  TK_EQ,TK_NOT_EQ,
+  TK_AND,TK_OR,TK_NOT,
+  TK_NUMBER,TK_HEX,
+  TK_REG
   /* TODO: Add more token types */
 
 };
@@ -18,17 +24,26 @@ static struct rule {
   int token_type;
 } rules[] = {
 
-  /* TODO: Add more rules.
+    /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+    {"\\$[a-zA-Z]+", TK_REG},      // register name
+    {"0x[0-9]+", TK_NUMBER},      // hex
+    {"[0-9]+", TK_NUMBER},        // number
+    {" +", TK_NOTYPE},            // spaces
+    {"\\+", TK_PLUS},              // plus
+    {"-", TK_SUB},                // sub
+    {"\\*", TK_MUL_DREF},          // mul or deference
+    {"/", TK_DIV},                // div
+    {"\\(", TK_LEFT_PARENTHESES},  // left parentheses
+    {"\\)", TK_RIGHT_PARENTHESES}, // right parentheses
+    {"==", TK_EQ},                // equal
+    {"!=", TK_NOT_EQ},            // not equal
+    {"&&", TK_AND},               // and
+    {"||", TK_OR},                // or
+    {"!", TK_NOT}                 // not
 };
-
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
-
 static regex_t re[NR_REGEX];
 
 /* Rules are used for many times.
@@ -78,10 +93,17 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+        Token new_token;
         switch (rules[i].token_type) {
+          // ignore space
+          case TK_NOTYPE:break;
+          case TK_PLUS:
+            new_token.type=TK_PLUS;
+            break;
           default: TODO();
         }
+        tokens[nr_token]=new_token;
+        nr_token++;
 
         break;
       }
