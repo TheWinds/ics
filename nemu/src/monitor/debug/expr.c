@@ -185,7 +185,7 @@ int find_dominant_op(int p,int q){
             dominant_op=i;
     }
   }
-  // if (dominant_op==-1) Assert(0);
+  if (dominant_op==-1) assert(0);
   return dominant_op;
 }
 
