@@ -8,15 +8,15 @@
 
 enum {
   TK_NOTYPE = 256,
-  TK_PLUS,TK_SUB,TK_MUL_DREF,TK_DIV,
-  TK_LEFT_PARENTHESES,
-  TK_RIGHT_PARENTHESES,
+  TK_LEFT_PARENTHESES,TK_RIGHT_PARENTHESES,
+  TK_DREF,TK_NEG,TK_NOT,
+  TK_MUL,TK_DIV,
+  TK_PLUS,TK_SUB,
   TK_EQ,TK_NOT_EQ,
-  TK_AND,TK_OR,TK_NOT,
+  TK_AND,
+  TK_OR,
   TK_NUMBER,TK_HEX,
   TK_REG
-  /* TODO: Add more token types */
-
 };
 
 static struct rule {
@@ -33,12 +33,12 @@ static struct rule {
     {" +", TK_NOTYPE},             // spaces
     {"\\+", TK_PLUS},              // plus
     {"-", TK_SUB},                 // sub
-    {"\\*", TK_MUL_DREF},          // mul or deference
+    {"\\*", TK_MUL},          // mul or deference
     {"/", TK_DIV},                 // div
     {"\\(", TK_LEFT_PARENTHESES},  // left parentheses
     {"\\)", TK_RIGHT_PARENTHESES}, // right parentheses
     {"==", TK_EQ},                 // equal
-    {"!=", TK_NOT_EQ},             // not equal
+    {"!=", TK_NOT_EQ},           // not equal
     {"&&", TK_AND},                // and
     {"\\|\\|", TK_OR},             // or
     {"!", TK_NOT}                  // not
@@ -149,6 +149,52 @@ bool check_parentheses(int p,int q){
   return true;
 }
 
+static int op_priority[TK_OR-TK_LEFT_PARENTHESES+1]={
+  0,0,1,1,1,2,2,3,3,4,4,5,6
+};
+
+int get_op_priority(int token_type){
+      // * (dereference) - (negative) !(not)
+    // * /
+    // + -
+    // == !=
+    // &&
+    // ||
+   return op_priority[token_type-TK_LEFT_PARENTHESES];
+}
+
+int find_dominant_op(int p,int q){
+  int parentheses=0;
+  int dominant_op=-1;
+  for(int i=q;i>=p;i--){
+  int token_type=tokens[i].type;
+    if(token_type==TK_RIGHT_PARENTHESES){
+      parentheses++;
+      continue;
+    }
+    if(token_type==TK_LEFT_PARENTHESES){
+      parentheses--;
+      continue;
+    }
+    // in parenthese
+    if(parentheses!=0) continue;
+    // set default
+    if(dominant_op==-1) dominant_op=i;
+    if (get_op_priority(token_type)
+          > get_op_priority(tokens[dominant_op].type)){
+            dominant_op=i;
+    }
+  }
+  // if (dominant_op==-1) Assert(0);
+  return dominant_op;
+}
+
+uint32_t eval(int p,int q){
+  int d=find_dominant_op(p,q);
+  Log("%d => %s ",d,tokens[d].str);
+  return 0;
+}
+
 bool check_expr(){
   if (nr_token>=2){
     if(tokens[0].type==TK_LEFT_PARENTHESES
@@ -164,12 +210,14 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  Log("check expr:%d",check_expr());
+
   if (!check_expr()){
     printf("bad expression\n");
     *success=false;
     return 0;
   }
+  eval(0,nr_token-1);
+
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
