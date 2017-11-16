@@ -96,7 +96,7 @@ static bool make_token(char *e) {
         Token new_token;
         int new_token_type=rules[i].token_type;
         // save token type
-        if (new_token_type>=TK_REG && new_token_type<=TK_NOT){
+        if (new_token_type>=TK_NOTYPE && new_token_type<=TK_REG){
             new_token.type=new_token_type;
         }
         // save token value
@@ -164,7 +164,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  Log("check erxp:%d",check_expr());
+  Log("check expr:%d",check_expr());
   if (!check_expr()){
     printf("bad expression\n");
     *success=false;
