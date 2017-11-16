@@ -192,6 +192,8 @@ int find_dominant_op(int p,int q){
 
 uint32_t str2uint32(char *str)
 {
+  Log("str2uint32:%s",str);
+  
   uint32_t n = 0;
   int lenStr = strlen(str);
   for (int i = 0; i < lenStr; i++)
