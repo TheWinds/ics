@@ -28,7 +28,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
     {"\\$[a-zA-Z]+", TK_REG},      // register name
-    {"0x[0-9]+", TK_NUMBER},      // hex
+    {"0x[0-9]+", TK_HEX},      // hex
     {"[0-9]+", TK_NUMBER},        // number
     {" +", TK_NOTYPE},            // spaces
     {"\\+", TK_PLUS},              // plus
@@ -94,14 +94,24 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
         Token new_token;
-        switch (rules[i].token_type) {
-          // ignore space
-          case TK_NOTYPE:break;
-          case TK_PLUS:
-            new_token.type=TK_PLUS;
-            break;
-          default: TODO();
+        int new_token_type=rules[i].token_type;
+        // save token type
+        if (new_token_type>=TK_REG && new_token_type<=TK_NOT){
+            new_token.type=new_token_type;
         }
+        // save token value
+        switch (new_token_type) {
+          case TK_REG:
+            strncpy(new_token.str,e + position - substr_len + 1,substr_len - 1);
+          break;
+          case TK_NUMBER:break;
+            strncpy(new_token.str,e + position - substr_len,substr_len);
+          case TK_HEX:
+            strncpy(new_token.str,e + position - substr_len + 2,substr_len - 2);          
+          break;
+          default:break;
+        }
+        if (new_token.type==TK_NOTYPE) break;
         tokens[nr_token]=new_token;
         nr_token++;
 

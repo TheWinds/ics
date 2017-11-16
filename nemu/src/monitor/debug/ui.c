@@ -89,6 +89,16 @@ static int cmd_info(char *args){
   return 0;  
 }
 
+static int cmd_p(char *args){
+  uint32_t result;
+  bool success;
+  result=expr(args,&success);
+  if (success){
+    printf("result : %u",result);
+  }
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -101,6 +111,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si","Step execute N instruction,si [N] ",cmd_si},
   {"info","print registers or watchpointer information",cmd_info},
+  {"p","expr",cmd_p},
 
   /* TODO: Add more commands */
 
