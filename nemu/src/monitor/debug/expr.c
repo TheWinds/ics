@@ -128,14 +128,53 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p,int q){
+  int stack=0;
+  for(int i=p;i<=q;i++){
+   if(tokens[i].type==TK_LEFT_PARENTHESES){
+     stack++;
+   }
+   if(tokens[i].type==TK_RIGHT_PARENTHESES){
+     stack--;
+   }
+   // too many right parentheses
+   if (stack<0){
+     return false;
+   }     
+  }
+  // too many left parentheses  
+  if (stack!=0){
+    return false;
+  }
+  return true;
+}
+
+bool check_expr(){
+  if (nr_token>=2){
+    if(tokens[0].type==TK_LEFT_PARENTHESES
+        && tokens[nr_token-1].type==TK_RIGHT_PARENTHESES){
+      return false;
+    }
+  }
+  return check_parentheses(0,nr_token-1);
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
-
+  if (!check_expr()){
+    printf("bad expression\n");
+    *success=false;
+    return 0;
+  }
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
 
   return 0;
 }
+
+
+
+
