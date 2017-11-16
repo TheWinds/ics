@@ -190,9 +190,37 @@ int find_dominant_op(int p,int q){
   return dominant_op;
 }
 
+uint32_t str2uint32(char *str)
+{
+  uint32_t n = 0;
+  int lenStr = strlen(str);
+  for (int i = 0; i < lenStr; i++)
+  {
+    n += str[i] - 48;
+    if (i != lenStr - 1)
+      n *= 10;
+  }
+  return n;
+}
+
+uint32_t str2hexuint32(char *str){
+  return 0;
+}
+
 uint32_t eval(int p,int q){
-  int d=find_dominant_op(p,q);
-  Log("%d => %s ",d,tokens[d].str);
+  if(p>q){
+    // bad expression
+    assert(0);
+    return 0; 
+  }else if(p==q){
+    switch (tokens[p].type){
+      case TK_NUMBER:
+        return str2uint32(tokens[p].str);
+      default:assert(0);
+    }
+  }
+  // int d=find_dominant_op(p,q);
+  // Log("%d => %s ",d,tokens[d].str);
   return 0;
 }
 
@@ -217,7 +245,8 @@ uint32_t expr(char *e, bool *success) {
     *success=false;
     return 0;
   }
-  eval(0,nr_token-1);
+  *success=true;
+  return eval(0,nr_token-1);
 
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
