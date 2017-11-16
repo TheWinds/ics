@@ -227,6 +227,7 @@ uint32_t register_val(char *str){
   for(i=R_EAX;i<=R_EDI;i++){
     if(strcmp(regsl[i],str)==0) break;
   }
+  Log("register_val:%d\n",i);
   return reg_l(i-1);
 }
 
