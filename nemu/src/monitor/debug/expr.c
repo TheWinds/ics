@@ -164,6 +164,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+  Log("check erxp:%d",check_expr());
   if (!check_expr()){
     printf("bad expression\n");
     *success=false;
