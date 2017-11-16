@@ -178,6 +178,7 @@ int find_dominant_op(int p,int q){
     }
     // in parenthese
     if(parentheses!=0) continue;
+    if(!(token_type>=TK_LEFT_PARENTHESES&&token_type<=TK_OR)) continue;
     // set default
     if(dominant_op==-1) dominant_op=i;
     if (get_op_priority(token_type)
