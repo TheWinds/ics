@@ -100,6 +100,7 @@ static int cmd_p(char *args){
   if (success){
     printf("result : %u",result);
   }
+  printf("eval error");
   return 0;
 }
 
