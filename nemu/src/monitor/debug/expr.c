@@ -193,22 +193,33 @@ int find_dominant_op(int p,int q){
 
 uint32_t str2uint32(char *str)
 {
-  Log("str2uint32:%s",str);
-  
   uint32_t n = 0;
   int lenStr = strlen(str);
   for (int i = 0; i < lenStr; i++)
   {
-    n += str[i] - 48;
+    n += str[i] - '0';
     if (i != lenStr - 1)
       n *= 10;
   }
-  Log("str2uint32:%d",n);
   return n;
 }
 
-uint32_t str2hexuint32(char *str){
-  return 0;
+uint32_t str2uint32_hex(char *str)
+{
+  uint32_t n = 0;
+  int lenStr = strlen(str);
+  for (int i = 0; i < lenStr; i++)
+  {
+    if (str[i] >= '0' && str[i] <= '9')
+      n += str[i] - '0';
+    if (str[i] >= 'A' && str[i] <= 'F')
+      n += str[i] - 'A' + 10;
+    if (str[i] >= 'a' && str[i] <= 'f')
+      n += str[i] - 'a' + 10;
+    if (i != lenStr - 1)
+      n *= 16;
+  }
+  return n;
 }
 
 uint32_t eval(int p,int q){
@@ -220,6 +231,8 @@ uint32_t eval(int p,int q){
     switch (tokens[p].type){
       case TK_NUMBER:
         return str2uint32(tokens[p].str);
+      case TK_HEX:
+        return str2uint32_hex(tokens[p].str);
       default:assert(0);
     }
   }
