@@ -28,20 +28,20 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
     {"\\$[a-zA-Z]+", TK_REG},      // register name
-    {"0x[0-9]+", TK_HEX},      // hex
-    {"[0-9]+", TK_NUMBER},        // number
-    {" +", TK_NOTYPE},            // spaces
+    {"0x[0-9]+", TK_HEX},          // hex
+    {"[0-9]+", TK_NUMBER},         // number
+    {" +", TK_NOTYPE},             // spaces
     {"\\+", TK_PLUS},              // plus
-    {"-", TK_SUB},                // sub
+    {"-", TK_SUB},                 // sub
     {"\\*", TK_MUL_DREF},          // mul or deference
-    {"/", TK_DIV},                // div
+    {"/", TK_DIV},                 // div
     {"\\(", TK_LEFT_PARENTHESES},  // left parentheses
     {"\\)", TK_RIGHT_PARENTHESES}, // right parentheses
-    {"==", TK_EQ},                // equal
-    {"!=", TK_NOT_EQ},            // not equal
-    {"&&", TK_AND},               // and
-    {"||", TK_OR},                // or
-    {"!", TK_NOT}                 // not
+    {"==", TK_EQ},                 // equal
+    {"!=", TK_NOT_EQ},             // not equal
+    {"&&", TK_AND},                // and
+    {"\\|\\|", TK_OR},             // or
+    {"!", TK_NOT}                  // not
 };
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
 static regex_t re[NR_REGEX];
