@@ -253,6 +253,38 @@ uint32_t eval(int p, int q)
       assert(0);
     }
   }
+  else if (check_parentheses(p, q))
+  {
+    return eval(p + 1, q - 1);
+  }
+  else
+  {
+    int dominant_op = find_dominant_op(p, q);
+    int op_type = tokens[dominant_op].type;
+    uint32_t val1=0, val2=0;
+    if (op_type >= TK_DREF && op_type <= TK_NOT)
+    {
+      val1 = eval(dominant_op + 1, q);
+    }
+    else
+    {
+      val1 = eval(p, dominant_op - 1);
+      val2 = eval(dominant_op + 1, q);
+    }
+
+    switch (op_type)
+    {
+    case TK_PLUS:
+      return val1 + val2;
+    case TK_SUB:
+      return val1 - val2;
+    case TK_MUL:
+      return val1 * val2;
+    case TK_DIV:
+      return val1 / val2;
+      default:assert(0);
+    }
+  }
   // int d=find_dominant_op(p,q);
   // Log("%d => %s ",d,tokens[d].str);
   return 0;
