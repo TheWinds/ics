@@ -224,6 +224,8 @@ uint32_t str2uint32_hex(char *str)
 
 uint32_t register_val(char *str){
   int i;
+  Log("register_val:%s\n",str);
+  
   for(i=R_EAX;i<=R_EDI;i++){
     if(strcmp(regsl[i],str)==0) break;
   }
