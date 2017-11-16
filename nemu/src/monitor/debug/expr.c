@@ -104,8 +104,9 @@ static bool make_token(char *e) {
           case TK_REG:
             strncpy(new_token.str,e + position - substr_len + 1,substr_len - 1);
           break;
-          case TK_NUMBER:break;
+          case TK_NUMBER:
             strncpy(new_token.str,e + position - substr_len,substr_len);
+            break;
           case TK_HEX:
             strncpy(new_token.str,e + position - substr_len + 2,substr_len - 2);          
           break;
