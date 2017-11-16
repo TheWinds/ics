@@ -187,6 +187,7 @@ int find_dominant_op(int p,int q){
             dominant_op=i;
     }
   }
+  Log("find_dominant_op:%s",tokens[dominant_op].str);
   if (dominant_op==-1) assert(0);
   return dominant_op;
 }
