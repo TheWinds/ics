@@ -247,6 +247,7 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
+    printf("data type :%d\n",tokens[p].type);
     switch (tokens[p].type)
     {
     case TK_NUMBER:
