@@ -28,7 +28,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
     {"\\$[a-zA-Z]+", TK_REG},      // register name
-    {"0x[0-9]+", TK_HEX},          // hex
+    {"0x[0-9A-Za-z]+", TK_HEX},          // hex
     {"[0-9]+", TK_NUMBER},         // number
     {" +", TK_NOTYPE},             // spaces
     {"\\+", TK_PLUS},              // plus
