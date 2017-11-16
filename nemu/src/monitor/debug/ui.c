@@ -90,6 +90,10 @@ static int cmd_info(char *args){
 }
 
 static int cmd_p(char *args){
+  if (args==NULL){
+    printf("please input expression!\n");
+    return 0;
+  }
   uint32_t result;
   bool success;
   result=expr(args,&success);
