@@ -234,6 +234,11 @@ uint32_t register_val(char *str){
 
 uint32_t eval(int p, int q)
 {
+  char expression[256];
+  for(int i=p;i<=q;i++){
+    strcpy(expression+strlen(expression),tokens[i].str);
+  }
+  printf("eval: %s \n",expression);
   if (p > q)
   {
     // bad expression
