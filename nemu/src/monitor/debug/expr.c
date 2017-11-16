@@ -130,12 +130,14 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int p,int q){
-  int stack=0;
+  int stack=0,find=0;
   for(int i=p;i<=q;i++){
    if(tokens[i].type==TK_LEFT_PARENTHESES){
+     find++;
      stack++;
    }
    if(tokens[i].type==TK_RIGHT_PARENTHESES){
+     find++;
      stack--;
    }
    // too many right parentheses
@@ -147,7 +149,7 @@ bool check_parentheses(int p,int q){
   if (stack!=0){
     return false;
   }
-  return true;
+  return find>0;
 }
 
 static int op_priority[TK_OR-TK_LEFT_PARENTHESES+1]={
