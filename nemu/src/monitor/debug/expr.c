@@ -222,18 +222,34 @@ uint32_t str2uint32_hex(char *str)
   return n;
 }
 
-uint32_t eval(int p,int q){
-  if(p>q){
+uint32_t register_val(char *str){
+  int i;
+  for(i=R_EAX;i<=R_EDI;i++){
+    if(strcmp(regsl[i],str)==0) break;
+  }
+  return reg_l(i-1);
+}
+
+uint32_t eval(int p, int q)
+{
+  if (p > q)
+  {
     // bad expression
     assert(0);
-    return 0; 
-  }else if(p==q){
-    switch (tokens[p].type){
-      case TK_NUMBER:
-        return str2uint32(tokens[p].str);
-      case TK_HEX:
-        return str2uint32_hex(tokens[p].str);
-      default:assert(0);
+    return 0;
+  }
+  else if (p == q)
+  {
+    switch (tokens[p].type)
+    {
+    case TK_NUMBER:
+      return str2uint32(tokens[p].str);
+    case TK_HEX:
+      return str2uint32_hex(tokens[p].str);
+    case TK_REG:
+      return register_val(tokens[p].str);
+    default:
+      assert(0);
     }
   }
   // int d=find_dominant_op(p,q);
