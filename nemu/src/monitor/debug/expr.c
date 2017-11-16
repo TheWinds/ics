@@ -200,6 +200,7 @@ uint32_t str2uint32(char *str)
     if (i != lenStr - 1)
       n *= 10;
   }
+  Log("str2uint32:%d",n);
   return n;
 }
 
