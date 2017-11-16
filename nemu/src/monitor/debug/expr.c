@@ -232,7 +232,7 @@ uint32_t register_val(char *str){
     if(strcmp(regsl[i],str)==0) break;
   }
   Log("register_val:%d\n",i);
-  return reg_l(i-1);
+  return reg_l(i);
 }
 
 uint32_t eval(int p, int q)
