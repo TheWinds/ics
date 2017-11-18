@@ -263,7 +263,7 @@ uint32_t eval(int p, int q)
 {
   printf("eval: ");
   for(int i=p;i<=q;i++){
-    printf("%s",get_token_str(i));
+    printf("%s",get_token_str(tokens[i].type));
   }
   printf("\n");
   if (p > q)
