@@ -129,27 +129,39 @@ static bool make_token(char *e) {
   return true;
 }
 
-bool check_parentheses(int p,int q){
-  int stack=0,find=0;
-  for(int i=p;i<=q;i++){
-   if(tokens[i].type==TK_LEFT_PARENTHESES){
-     find++;
-     stack++;
-   }
-   if(tokens[i].type==TK_RIGHT_PARENTHESES){
-     find++;
-     stack--;
-   }
-   // too many right parentheses
-   if (stack<0){
-     return false;
-   }     
+int check_parentheses(int p, int q)
+{
+  int stack = 0;
+  bool has_parentheses = false;
+  for (int i = p; i <= q; i++)
+  {
+    if (tokens[i].type == TK_LEFT_PARENTHESES)
+    {
+      has_parentheses = true;
+      stack++;
+    }
+    if (tokens[i].type == TK_RIGHT_PARENTHESES)
+    {
+      has_parentheses = true;
+      stack--;
+    }
+    // too many right parentheses
+    if (stack < 0)
+    {
+      return false;
+    }
   }
-  // too many left parentheses  
-  if (stack!=0){
-    return false;
+  if (has_parentheses)
+  {
+    // too many left parentheses
+    if (stack != 0)
+    {
+      return false;
+    }
+    return true;
   }
-  return find>0;
+
+  return -1;
 }
 
 static int op_priority[TK_OR-TK_LEFT_PARENTHESES+1]={
@@ -308,7 +320,11 @@ bool check_expr(){
       return false;
     }
   }
-  return check_parentheses(0,nr_token-1);
+  int check_parentheses_ok=check_parentheses(0,nr_token-1);
+  if (check_parentheses_ok==-1){
+    return true;
+  }
+  return check_parentheses_ok;
 }
 
 uint32_t expr(char *e, bool *success) {
