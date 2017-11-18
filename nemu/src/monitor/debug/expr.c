@@ -371,17 +371,18 @@ uint32_t eval(int p, int q)
 }
 
 bool check_expr(){
-  if (nr_token>=2){
-    if(tokens[0].type==TK_LEFT_PARENTHESES
-        && tokens[nr_token-1].type==TK_RIGHT_PARENTHESES){
-      return false;
-    }
-  }
-  int check_parentheses_ok=check_parentheses(0,nr_token-1);
-  if (check_parentheses_ok==-1){
-    return true;
-  }
-  return check_parentheses_ok;
+  // if (nr_token>=2){
+  //   if(tokens[0].type==TK_LEFT_PARENTHESES
+  //       && tokens[nr_token-1].type==TK_RIGHT_PARENTHESES){
+  //     return false;
+  //   }
+  // }
+  // int check_parentheses_ok=check_parentheses(0,nr_token-1);
+  // if (check_parentheses_ok==-1){
+  //   return true;
+  // }
+  // return check_parentheses_ok;
+  return true;
 }
 
 uint32_t expr(char *e, bool *success) {
