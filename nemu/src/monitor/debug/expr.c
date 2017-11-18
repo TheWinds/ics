@@ -71,6 +71,15 @@ typedef struct token {
 Token tokens[32];
 int nr_token;
 
+static char* get_token_str(int token_type){
+  int index=token_type-TK_NOTYPE;
+  char token_strs[TK_OR-TK_NOTYPE][3]={
+    " ","(",")","*.","-.","!","*","/","+",
+    "-","==","!=","&&","||"
+  };
+  return token_strs[index];
+}
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -206,7 +215,6 @@ int find_dominant_op(int p,int q){
             dominant_op=i;
     }
   }
-  Log("find_dominant_op:%s",tokens[dominant_op].str);
   if (dominant_op==-1) assert(0);
   return dominant_op;
 }
@@ -253,6 +261,11 @@ uint32_t register_val(char *str){
 
 uint32_t eval(int p, int q)
 {
+  printf("eval: ");
+  for(int i=p;i<=q;i++){
+    printf("%s",get_token_str(i));
+  }
+  printf("\n");
   if (p > q)
   {
     // bad expression
@@ -261,7 +274,6 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
-    printf("data type :%d\n",tokens[p].type);
     switch (tokens[p].type)
     {
     case TK_NUMBER:
@@ -303,6 +315,7 @@ uint32_t eval(int p, int q)
     case TK_MUL:
       return val1 * val2;
     case TK_DIV:
+      assert(val2!=0);
       return val1 / val2;
     case TK_NEG:
       return -val1;
