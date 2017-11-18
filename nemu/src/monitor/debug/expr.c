@@ -302,6 +302,7 @@ void show_eval_expr(int p,int q){
       printf("%s", get_token_str(tokens[i].type));
       break;
     }
+    printf(" ");
   }
   printf("\n");
 }
