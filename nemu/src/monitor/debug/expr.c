@@ -309,7 +309,7 @@ uint32_t eval(int p, int q)
   else
   {
     int dominant_op = find_dominant_op(p, q);
-    printf("dominant_op :%d\n",dominant_op);    
+    printf("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
     int op_type = tokens[dominant_op].type;
     uint32_t val1=0, val2=0;
     if (op_type >= TK_DREF && op_type <= TK_NOT)
