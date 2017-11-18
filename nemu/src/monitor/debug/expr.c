@@ -70,8 +70,8 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
-  char token_strs[TK_OR-TK_NOTYPE+1][3]={
-    " ","(",")","*.","-.","!","*","/","+",
+  char token_strs[TK_OR-TK_NOTYPE+1][10]={
+    " ","(",")"," [*] "," [-] ","!","*","/","+",
     "-","==","!=","&&","||"
   };
 static char* get_token_str(int token_type){
