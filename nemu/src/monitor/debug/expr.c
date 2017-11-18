@@ -261,7 +261,7 @@ uint32_t register_val(char *str){
 
 uint32_t eval(int p, int q)
 {
-  printf("eval: %d -- %d",p,q);
+  printf("eval: ");
   for (int i = p; i <= q; i++)
   {
     int token_type = tokens[i].type;
