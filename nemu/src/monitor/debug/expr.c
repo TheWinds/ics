@@ -110,12 +110,6 @@ static bool make_token(char *e) {
           case TK_HEX:
             strncpy(new_token.str,e + position - substr_len + 2,substr_len - 2);          
           break;
-          case TK_PLUS:
-          new_token.str[0]='+';
-          break;
-          case TK_MUL:
-          new_token.str[0]='*';
-          break;
           default:break;
         }
         if (new_token.type==TK_NOTYPE) break;
@@ -254,11 +248,6 @@ uint32_t register_val(char *str){
 
 uint32_t eval(int p, int q)
 {
-  char expression[256];
-  for(int i=p;i<=q;i++){
-    strcpy(expression+strlen(expression),tokens[i].str);
-  }
-  printf("eval: %s \n",expression);
   if (p > q)
   {
     // bad expression
@@ -282,7 +271,6 @@ uint32_t eval(int p, int q)
   }
   else if (check_parentheses(p, q)==true)
   {
-    Log("check_parentheses");
     return eval(p + 1, q - 1);
   }
   else
@@ -311,6 +299,10 @@ uint32_t eval(int p, int q)
       return val1 * val2;
     case TK_DIV:
       return val1 / val2;
+    case TK_NEG:
+      return -val1;
+    case TK_NOT:
+      return !val1;
       default:assert(0);
     }
   }
