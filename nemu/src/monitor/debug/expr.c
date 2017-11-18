@@ -178,7 +178,8 @@ int check_parentheses(int p, int q)
       return false;
     }
     return tokens[p].type==TK_LEFT_PARENTHESES
-    &&tokens[q].type==TK_RIGHT_PARENTHESES;
+    &&tokens[q].type==TK_RIGHT_PARENTHESES
+    &&(p!=0||q!=nr_token-1);
   }
 
   return -1;
