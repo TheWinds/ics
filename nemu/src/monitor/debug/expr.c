@@ -325,6 +325,7 @@ uint32_t eval(int p, int q)
   }
   else if (check_parentheses(p, q)==true)
   {
+    Log("parentheses....");
     return eval(p + 1, q - 1);
   }
   else
