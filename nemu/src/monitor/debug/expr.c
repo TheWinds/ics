@@ -287,6 +287,7 @@ void show_eval_expr(int p,int q){
     printf("eval: ");
   for (int i = p; i <= q; i++)
   {
+    printf(" ");
     int token_type = tokens[i].type;
     switch (token_type)
     {
@@ -303,7 +304,6 @@ void show_eval_expr(int p,int q){
       printf("%s", get_token_str(tokens[i].type));
       break;
     }
-    printf(" ");
   }
   printf("\n");
 }
