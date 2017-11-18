@@ -110,6 +110,12 @@ static bool make_token(char *e) {
           case TK_HEX:
             strncpy(new_token.str,e + position - substr_len + 2,substr_len - 2);          
           break;
+          case TK_PLUS:
+          new_token.str[0]='+';
+          break;
+          case TK_MUL:
+          new_token.str[0]='*';
+          break;
           default:break;
         }
         if (new_token.type==TK_NOTYPE) break;
