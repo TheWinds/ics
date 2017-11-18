@@ -98,7 +98,7 @@ static int cmd_p(char *args){
   bool success;
   result=expr(args,&success);
   if (success){
-    printf("result : %u\n",result);
+    printf(">>>  : %u\n",result);
   }
   return 0;
 }
