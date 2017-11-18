@@ -295,14 +295,17 @@ uint32_t str2uint32_hex(char *str)
   return n;
 }
 
-uint32_t register_val(char *str)
+uint32_t register_val(char *str, bool *find)
 {
   int i;
   for (i = R_EAX; i <= R_EDI; i++)
   {
     // Log("%u",reg_l(i));
     if (strcmp(regsl[i], str) == 0)
+    {
+      *find = true;
       break;
+    }
   }
   return reg_l(i);
 }
@@ -337,7 +340,7 @@ uint32_t eval(int p, int q)
 {
   if (!eval_ok)
     return 0;
-  // show_eval_expr(p,q);
+
   if (p > q)
   {
     // bad expression
@@ -347,6 +350,8 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
+    bool register_exist;
+    uint32_t rval =0;
     switch (tokens[p].type)
     {
     case TK_NUMBER:
@@ -354,7 +359,15 @@ uint32_t eval(int p, int q)
     case TK_HEX:
       return str2uint32_hex(tokens[p].str);
     case TK_REG:
-      return register_val(tokens[p].str);
+      register_exist = false;
+      rval = register_val(tokens[p].str, &register_exist);
+      if (!register_exist)
+      {
+        printf("eval failed register $%s is not exist\n", tokens[p].str);
+        eval_ok = false;
+        return 0;
+      }
+      return rval;
     default:
       assert(0);
       return 0;
