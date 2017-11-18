@@ -315,6 +315,7 @@ uint32_t eval(int p, int q)
     if (op_type >= TK_DREF && op_type <= TK_NOT)
     {
       val1 = eval(dominant_op + 1, q);
+      printf("val1: %u\n",val1);
     }
     else
     {
