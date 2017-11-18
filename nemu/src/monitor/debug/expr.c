@@ -304,10 +304,10 @@ uint32_t register_val(char *str, bool *find)
     if (strcmp(regsl[i], str) == 0)
     {
       *find = true;
-      break;
+      return reg_l(i);
     }
   }
-  return reg_l(i);
+  return 0;
 }
 
 void show_eval_expr(int p, int q)
