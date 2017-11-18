@@ -374,7 +374,7 @@ uint32_t eval(int p, int q)
     case TK_NOT:
       return !val1;
     case TK_DREF:
-      return 1;
+      return vaddr_read(val1,4);
       default:assert(0);
     }
   }
