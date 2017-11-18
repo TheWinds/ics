@@ -112,13 +112,13 @@ static bool make_token(char *e) {
         switch (new_token_type) {
           case TK_REG:
             strncpy(new_token.str,e + position - substr_len + 1,substr_len - 1);
-          break;
+            break;
           case TK_NUMBER:
             strncpy(new_token.str,e + position - substr_len,substr_len);
             break;
           case TK_HEX:
             strncpy(new_token.str,e + position - substr_len + 2,substr_len - 2);          
-          break;
+            break;
           case TK_SUB:
             if(nr_token==0||(tokens[nr_token-1].type>=TK_NEG&&tokens[nr_token-1].type<=TK_OR)){
               new_token.type=TK_NEG;
@@ -319,6 +319,7 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
+    Log("P == Q,%d: ",p);
     switch (tokens[p].type)
     {
     case TK_NUMBER:
