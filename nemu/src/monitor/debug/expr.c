@@ -124,6 +124,11 @@ static bool make_token(char *e) {
               new_token.type=TK_NEG;
             }
             break;
+          case TK_MUL:
+            if(nr_token==0||(tokens[nr_token-1].type>=TK_DREF&&tokens[nr_token-1].type<=TK_OR)){
+              new_token.type=TK_DREF;
+            }
+            break;
           default:break;
         }
         if (new_token.type==TK_NOTYPE) break;
@@ -192,36 +197,46 @@ int get_op_priority(int token_type){
    return op_priority[token_type-TK_LEFT_PARENTHESES];
 }
 
-int find_dominant_op(int p,int q){
-  int parentheses=0;
-  int dominant_op=-1;
-  for(int i=q;i>=p;i--){
-  int token_type=tokens[i].type;
-    if(token_type==TK_RIGHT_PARENTHESES){
+int find_dominant_op(int p, int q)
+{
+  int parentheses = 0;
+  int dominant_op = -1;
+  for (int i = q; i >= p; i--)
+  {
+    int token_type = tokens[i].type;
+    if (token_type == TK_RIGHT_PARENTHESES)
+    {
       parentheses++;
       continue;
     }
-    if(token_type==TK_LEFT_PARENTHESES){
+    if (token_type == TK_LEFT_PARENTHESES)
+    {
       parentheses--;
       continue;
     }
     // in parenthese
-    if(parentheses!=0) continue;
-    if(!(token_type>=TK_LEFT_PARENTHESES&&token_type<=TK_OR)) continue;
+    if (parentheses != 0)
+      continue;
+    if (!(token_type >= TK_LEFT_PARENTHESES && token_type <= TK_OR))
+      continue;
     // set default
-    if(dominant_op==-1) dominant_op=i;
-    int priority_new=get_op_priority(token_type);
-    int priority_old=get_op_priority(tokens[dominant_op].type);
-    if (priority_new>priority_old){
-        dominant_op=i;
+    if (dominant_op == -1)
+      dominant_op = i;
+    int priority_new = get_op_priority(token_type);
+    int priority_old = get_op_priority(tokens[dominant_op].type);
+
+    if (priority_new > priority_old)
+    {
+      dominant_op = i;
     }
-    if((token_type==tokens[dominant_op].type)
-    &&token_type>=TK_DREF
-    &&token_type<=TK_NOT){
-dominant_op=i;
+    // support unary operator
+    if ((token_type == tokens[dominant_op].type) && token_type >= TK_DREF && token_type <= TK_NOT)
+    {
+      dominant_op = i;
     }
   }
-  if (dominant_op==-1) assert(0);
+  if (dominant_op == -1)
+    assert(0);
   return dominant_op;
 }
 
