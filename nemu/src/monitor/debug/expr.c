@@ -262,8 +262,24 @@ uint32_t register_val(char *str){
 uint32_t eval(int p, int q)
 {
   printf("eval: %d -- %d",p,q);
-  for(int i=p;i<=q;i++){
-    printf("%s",get_token_str(tokens[i].type));
+  for (int i = p; i <= q; i++)
+  {
+    int token_type = tokens[i].type;
+    switch (token_type)
+    {
+    case TK_NUMBER:
+      printf("%s", tokens[i].str);
+      break;
+    case TK_HEX:
+      printf("0x%s", tokens[i].str);
+      break;
+    case TK_REG:
+      printf("$%s", tokens[i].str);
+      break;
+    default:
+      printf("%s", get_token_str(tokens[i].type));
+      break;
+    }
   }
   printf("\n");
   if (p > q)
