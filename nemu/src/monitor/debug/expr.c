@@ -283,6 +283,7 @@ uint32_t register_val(char *str){
 }
 
 void show_eval_expr(int p,int q){
+  printf("%d\n",q-p+1);
     printf("eval: ");
   for (int i = p; i <= q; i++)
   {
