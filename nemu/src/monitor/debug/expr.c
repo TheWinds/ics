@@ -336,7 +336,7 @@ uint32_t eval(int p, int q)
   else
   {
     int dominant_op = find_dominant_op(p, q);
-    // Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
+    Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
     int op_type = tokens[dominant_op].type;
     uint32_t val1=0, val2=0;
     if (op_type >= TK_DREF && op_type <= TK_NOT)
@@ -381,30 +381,9 @@ uint32_t eval(int p, int q)
   return 0;
 }
 
-bool check_expr(){
-  // if (nr_token>=2){
-  //   if(tokens[0].type==TK_LEFT_PARENTHESES
-  //       && tokens[nr_token-1].type==TK_RIGHT_PARENTHESES){
-  //     return false;
-  //   }
-  // }
-  // int check_parentheses_ok=check_parentheses(0,nr_token-1);
-  // if (check_parentheses_ok==-1){
-  //   return true;
-  // }
-  // return check_parentheses_ok;
-  return true;
-}
-
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
-    return 0;
-  }
-
-  if (!check_expr()){
-    printf("bad expression\n");
-    *success=false;
     return 0;
   }
   *success=true;
