@@ -351,7 +351,7 @@ uint32_t eval(int p, int q)
   else if (p == q)
   {
     bool register_exist;
-    uint32_t rval =0;
+    uint32_t rval = 0;
     switch (tokens[p].type)
     {
     case TK_NUMBER:
