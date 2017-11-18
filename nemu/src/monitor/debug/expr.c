@@ -352,6 +352,14 @@ uint32_t eval(int p, int q)
 
     switch (op_type)
     {
+    case TK_AND:
+    return val1&&val2;
+    case TK_OR:
+    return val1||val2;
+    case TK_EQ:
+    return val1==val2;
+    case TK_NOT_EQ:
+    return val1!=val2;
     case TK_PLUS:
       return val1 + val2;
     case TK_SUB:
@@ -365,11 +373,11 @@ uint32_t eval(int p, int q)
       return -val1;
     case TK_NOT:
       return !val1;
+    case TK_DREF:
+      return 1;
       default:assert(0);
     }
   }
-  // int d=find_dominant_op(p,q);
-  // Log("%d => %s ",d,tokens[d].str);
   return 0;
 }
 
