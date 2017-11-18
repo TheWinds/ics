@@ -282,9 +282,8 @@ uint32_t register_val(char *str){
   return reg_l(i);
 }
 
-uint32_t eval(int p, int q)
-{
-  printf("eval: ");
+void show_eval_expr(int p,int q){
+    printf("eval: ");
   for (int i = p; i <= q; i++)
   {
     int token_type = tokens[i].type;
@@ -305,6 +304,11 @@ uint32_t eval(int p, int q)
     }
   }
   printf("\n");
+}
+
+uint32_t eval(int p, int q)
+{
+  show_eval_expr(p,q);
   if (p > q)
   {
     // bad expression
@@ -327,13 +331,12 @@ uint32_t eval(int p, int q)
   }
   else if (check_parentheses(p, q)==true)
   {
-    Log("parentheses....");
     return eval(p + 1, q - 1);
   }
   else
   {
     int dominant_op = find_dominant_op(p, q);
-    printf("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
+    // Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
     int op_type = tokens[dominant_op].type;
     uint32_t val1=0, val2=0;
     if (op_type >= TK_DREF && op_type <= TK_NOT)
