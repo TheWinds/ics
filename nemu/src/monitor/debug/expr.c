@@ -103,6 +103,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
         Token new_token;
+        memset(new_token.str, 0, sizeof(new_token.str));
         int new_token_type=rules[i].token_type;
         // save token type
         if (new_token_type>=TK_NOTYPE && new_token_type<=TK_REG){
