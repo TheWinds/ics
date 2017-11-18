@@ -94,8 +94,8 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+        // Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+        //     i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -278,41 +278,40 @@ uint32_t str2uint32_hex(char *str)
 uint32_t register_val(char *str){
   int i;
   for(i=R_EAX;i<=R_EDI;i++){
-    Log("%u",reg_l(i));
+    // Log("%u",reg_l(i));
     if(strcmp(regsl[i],str)==0) break;
   }
   return reg_l(i);
 }
 
 void show_eval_expr(int p,int q){
-  printf("%d\n",q-p+1);
-    printf("eval: ");
+  Log("eval: ");
   for (int i = p; i <= q; i++)
   {
-    printf(" ");
+    Log(" ");
     int token_type = tokens[i].type;
     switch (token_type)
     {
     case TK_NUMBER:
-      printf("%s", tokens[i].str);
+      Log("%s", tokens[i].str);
       break;
     case TK_HEX:
-      printf("0x%s", tokens[i].str);
+      Log("0x%s", tokens[i].str);
       break;
     case TK_REG:
-      printf("$%s", tokens[i].str);
+      Log("$%s", tokens[i].str);
       break;
     default:
-      printf("%s", get_token_str(tokens[i].type));
+      Log("%s", get_token_str(tokens[i].type));
       break;
     }
   }
-  printf("\n");
+  Log("\n");
 }
 
 uint32_t eval(int p, int q)
 {
-  show_eval_expr(p,q);
+  // show_eval_expr(p,q);
   if (p > q)
   {
     // bad expression
@@ -321,7 +320,6 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
-    Log("P == Q,%d - %s : ",p,tokens[p].str);
     switch (tokens[p].type)
     {
     case TK_NUMBER:
@@ -341,7 +339,7 @@ uint32_t eval(int p, int q)
   else
   {
     int dominant_op = find_dominant_op(p, q);
-    Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
+    // Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
     int op_type = tokens[dominant_op].type;
     uint32_t val1=0, val2=0;
     if (op_type >= TK_DREF && op_type <= TK_NOT)
