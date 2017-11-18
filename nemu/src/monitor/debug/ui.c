@@ -99,8 +99,6 @@ static int cmd_p(char *args){
   result=expr(args,&success);
   if (success){
     printf("result : %u\n",result);
-  }else{
-    printf("eval error\n");
   }
   return 0;
 }
