@@ -319,7 +319,7 @@ uint32_t eval(int p, int q)
   }
   else if (p == q)
   {
-    Log("P == Q,%d: ",p);
+    Log("P == Q,%d - %s : ",p,tokens[p].str);
     switch (tokens[p].type)
     {
     case TK_NUMBER:
