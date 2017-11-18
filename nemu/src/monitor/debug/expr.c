@@ -239,8 +239,6 @@ int find_dominant_op(int p, int q)
       dominant_op = i;
     }
   }
-  if (dominant_op == -1)
-    assert(0);
   return dominant_op;
 }
 
@@ -308,14 +306,16 @@ void show_eval_expr(int p,int q){
   }
   Log("\n");
 }
-
+bool eval_ok=true;
 uint32_t eval(int p, int q)
 {
+  if(!eval_ok) return 0;
   // show_eval_expr(p,q);
   if (p > q)
   {
     // bad expression
-    assert(0);
+    printf("eval failed bad expression\n");
+    eval_ok=false;
     return 0;
   }
   else if (p == q)
@@ -330,6 +330,7 @@ uint32_t eval(int p, int q)
       return register_val(tokens[p].str);
     default:
       assert(0);
+      return 0;
     }
   }
   else if (check_parentheses(p, q)==true)
@@ -339,13 +340,17 @@ uint32_t eval(int p, int q)
   else
   {
     int dominant_op = find_dominant_op(p, q);
+    if(dominant_op==-1){
+      printf("eval failed bad expression\n");
+      eval_ok=false;
+      return 0;
+    }
     // Log("dominant_op :%s\n",get_token_str(tokens[dominant_op].type));    
     int op_type = tokens[dominant_op].type;
     uint32_t val1=0, val2=0;
     if (op_type >= TK_DREF && op_type <= TK_NOT)
     {
       val1 = eval(dominant_op + 1, q);
-      printf("val1: %u\n",val1);
     }
     else
     {
@@ -370,7 +375,11 @@ uint32_t eval(int p, int q)
     case TK_MUL:
       return val1 * val2;
     case TK_DIV:
-      assert(val2!=0);
+      if (val2==0){
+        printf("eval failed : the denominator can't be zero\n");
+        eval_ok=false;
+      return 0;
+      }
       return val1 / val2;
     case TK_NEG:
       return -val1;
@@ -389,12 +398,13 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  *success=true;
-  return eval(0,nr_token-1);
+  eval_ok=true;
+  uint32_t result=eval(0,nr_token-1);
+  *success=eval_ok;
+  return result;
 
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
-
   return 0;
 }
 
