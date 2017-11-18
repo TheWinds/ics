@@ -210,9 +210,15 @@ int find_dominant_op(int p,int q){
     if(!(token_type>=TK_LEFT_PARENTHESES&&token_type<=TK_OR)) continue;
     // set default
     if(dominant_op==-1) dominant_op=i;
-    if (get_op_priority(token_type)
-          > get_op_priority(tokens[dominant_op].type)){
-            dominant_op=i;
+    int priority_new=get_op_priority(token_type);
+    int priority_old=get_op_priority(tokens[dominant_op].type);
+    if (priority_new>priority_old){
+        dominant_op=i;
+    }
+    if((token_type==tokens[dominant_op].type)
+    &&token_type>=TK_DREF
+    &&token_type<=TK_NOT){
+dominant_op=i;
     }
   }
   if (dominant_op==-1) assert(0);
