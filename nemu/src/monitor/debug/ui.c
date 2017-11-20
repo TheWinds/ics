@@ -2,7 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
-
+#include "utils.h"
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -46,18 +46,6 @@ static uint64_t str2uint64(char *str){
   return n;
 }
 
-uint32_t str2uint32(char *str)
-{
-  uint32_t n = 0;
-  int lenStr = strlen(str);
-  for (int i = 0; i < lenStr; i++)
-  {
-    n += str[i] - '0';
-    if (i != lenStr - 1)
-      n *= 10;
-  }
-  return n;
-}
 
 static int cmd_si(char *args){
   // get the first argument 
