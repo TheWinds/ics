@@ -82,7 +82,7 @@ static int cmd_info(char *args){
     print_registers_info();
   }
   else if(strcmp(arg,"w")==0){   
-    
+    show_watchpoints(); 
   }else{
     print_cmd_info_usage();
   }
