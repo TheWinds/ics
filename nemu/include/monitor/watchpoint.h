@@ -15,5 +15,4 @@ typedef struct watchpoint {
 void show_watchpoints();
 bool del_wp(int n);
 bool add_wp(char* expression);
-extern int NR_WP;
 #endif
