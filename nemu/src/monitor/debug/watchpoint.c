@@ -101,7 +101,7 @@ void show_watchpoints(){
   printf("NO\tWaht\n");
   while(p!=NULL){
     printf("%d\t%s\n",p->NO,p->expression);
-    printf("%s\n",p->expression);
+    printf("%p\n",p);
     p=p->next;
   }
 }
