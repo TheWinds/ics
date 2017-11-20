@@ -105,11 +105,13 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char* args){
-  if(add_wp(args)){
-    printf("add watchpoint success\n");
-  }else{
-    printf("can't watchpoint: %s,the max number of watchpoints is 32\n",args);    
+  char* err=NULL;
+  int no=add_wp(args,err);
+  if(err!=NULL){
+    printf("can't watchpoint: %s\n",err);
+    return 0;
   }
+  printf("add watchpoint: [ %d ]\n",no);      
   return 0;
 }
 

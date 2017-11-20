@@ -71,14 +71,23 @@ void free_wp(WP* wp){
     p=p->next;
   }
 }
-bool add_wp(char *expression){
+
+int add_wp(char *expression,char* err){
   WP* wp=new_wp();
   if(wp==NULL){
-    return false;
+    err="too many watchpoints maxnum is 32";
+    return 0;
+  }
+  bool expr_pass=false;
+  uint32_t val=expr(expression,&expr_pass);  
+  if(!expr_pass){
+    err="expression check failed";
+    return 0;    
   }
   strcpy(wp->expression,expression);
+  wp->value=val;
   // Log("add_wp: %p => %s",wp->expression,wp->expression);
-  return true;
+  return wp->NO;
 }
 
 bool del_wp(int no){
@@ -100,10 +109,13 @@ void show_watchpoints(){
   printf("NO\tWhat\n");
   while(p!=NULL){
     printf("%d\t%s\n",p->NO,p->expression);
-    Log("show_watchpoints: %p => %s",
-    p->expression,p->expression);
+    // Log("show_watchpoints: %p => %s",
+    // p->expression,p->expression);
     p=p->next;
   }
 }
 
+// bool check_watchpoints(){
+
+// }
 
