@@ -29,18 +29,13 @@ WP* new_wp(){
     wp->next=NULL;    
     WP* p=head;
     if(p==NULL){
-      wp->NO=1;
       head=wp;
     }else{
-      int cnt=1;
       while(p){
         if(p->next==NULL){
-          wp->NO=cnt;
           p->next=wp;
           break;
         }
-        p->NO=cnt;
-        cnt++;
         p=p->next;
       }
     }
