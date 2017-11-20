@@ -75,6 +75,7 @@ bool add_wp(char *expression){
     return false;
   }
   wp->expression=expression;
+  Log("WP: %s",expression);
   return true;
 }
 
