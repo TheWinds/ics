@@ -99,10 +99,10 @@ bool del_wp(int no){
 
 void show_watchpoints(){
   WP* p=head;
-  printf("NO\tWaht\n");
+  printf("NO\tWhat\n");
   while(p!=NULL){
     printf("%d\t%s\n",p->NO,p->expression);
-    printf("%p\n",p->expression);
+    printf("%p  %lu\n",p->expression,strlen(p->expression));
     printf("%p\n",p);
     p=p->next;
   }
