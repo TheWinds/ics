@@ -11,7 +11,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
-    wp_pool[i].expression="";
+    // wp_pool[i].expression="";
     wp_pool[i].value=0;
   }
   wp_pool[NR_WP - 1].next = NULL;
@@ -76,7 +76,7 @@ bool add_wp(char *expression){
   if(wp==NULL){
     return false;
   }
-  wp->expression=expression;
+  strcpy(wp->expression,expression);
   Log("WP: %s",wp->expression);
   Log("&WP: %p",wp->expression);
   Log("&WP: %p",wp);
