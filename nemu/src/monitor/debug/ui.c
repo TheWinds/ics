@@ -46,6 +46,19 @@ static uint64_t str2uint64(char *str){
   return n;
 }
 
+uint32_t str2uint32(char *str)
+{
+  uint32_t n = 0;
+  int lenStr = strlen(str);
+  for (int i = 0; i < lenStr; i++)
+  {
+    n += str[i] - '0';
+    if (i != lenStr - 1)
+      n *= 10;
+  }
+  return n;
+}
+
 static int cmd_si(char *args){
   // get the first argument 
   char *arg=strtok(NULL," ");
@@ -103,6 +116,25 @@ static int cmd_p(char *args){
   return 0;
 }
 
+static int cmd_w(char* args){
+  if(add_wp(args)){
+    printf("add watchpoint success\n");
+  }else{
+    printf("can't watchpoint: %s,the max number of watchpoints is %d\n",args,NR_WP);    
+  }
+  return 0;
+}
+
+static int cmd_d(char* args){
+  int n = (int)str2uint32(args);
+  if(del_wp(n)){
+    printf("delete watchpoint success\n");
+  }else{
+    printf("can't delete watchpoint: %d\n",n);    
+  }
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -114,7 +146,9 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","Step execute N instruction,si [N] ",cmd_si},
-  {"info","print registers or watchpointer information",cmd_info},
+  {"info","print registers or watchpoint information",cmd_info},
+  {"w","set watch point",cmd_w},
+  {"d","delete watch point",cmd_d},
   {"p","expr",cmd_p},
 
   /* TODO: Add more commands */
