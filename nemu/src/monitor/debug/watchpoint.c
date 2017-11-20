@@ -76,9 +76,8 @@ bool add_wp(char *expression){
   if(wp==NULL){
     return false;
   }
-  // strcpy(wp->expression,expression);
-  wp->expression=expression;
-  Log("add_wp: %p => %s",wp->expression,wp->expression);
+  strcpy(wp->expression,expression);
+  // Log("add_wp: %p => %s",wp->expression,wp->expression);
   return true;
 }
 
@@ -102,7 +101,7 @@ void show_watchpoints(){
   while(p!=NULL){
     printf("%d\t%s\n",p->NO,p->expression);
     Log("show_watchpoints: %p => %s",
-          p->expression,p->expression);
+    p->expression,p->expression);
     p=p->next;
   }
 }
