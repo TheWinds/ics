@@ -78,6 +78,7 @@ bool add_wp(char *expression){
   }
   wp->expression=expression;
   Log("WP: %s",wp->expression);
+  Log("&WP: %p",wp->expression);
   Log("&WP: %p",wp);
   return true;
 }
@@ -101,6 +102,7 @@ void show_watchpoints(){
   printf("NO\tWaht\n");
   while(p!=NULL){
     printf("%d\t%s\n",p->NO,p->expression);
+    printf("%p\n",p->expression);
     printf("%p\n",p);
     p=p->next;
   }
