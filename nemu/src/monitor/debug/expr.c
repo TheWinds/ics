@@ -268,6 +268,10 @@ int find_dominant_op(int p, int q)
 
 uint32_t register_val(char *str, bool *find)
 {
+  if(strcmp(str,"eip")==0){
+    *find=true;
+    return cpu.eip;
+  }
   int i;
   for (i = R_EAX; i <= R_EDI; i++)
   {
