@@ -112,7 +112,6 @@ static int cmd_w(char* args){
     return 0;
   }
   printf("add watchpoint: [ %d ]\n",no);    
-  free(err);  
   return 0;
 }
 
