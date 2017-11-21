@@ -105,6 +105,8 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char* args){
+  printf("%s",args);
+  return 0;
   if(strlen(args)==0){
     printf("usage: w [expression]\n");
   }
