@@ -11,7 +11,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
-    // wp_pool[i].expression="";
+    wp_pool[i].hit=0;
     wp_pool[i].value=0;
   }
   wp_pool[NR_WP - 1].next = NULL;
@@ -89,6 +89,7 @@ int add_wp(char *expression, char **err)
   }
   strcpy(wp->expression, expression);
   wp->value = val;
+  wp->hit=0;
   return wp->NO;
 }
 
@@ -108,11 +109,9 @@ bool del_wp(int no){
 
 void show_watchpoints(){
   WP* p=head;
-  printf("NO\tWhat\n");
+  printf("NO\tWhat\tHit\n");
   while(p!=NULL){
-    printf("%d\t%s\n",p->NO,p->expression);
-    // Log("show_watchpoints: %p => %s",
-    // p->expression,p->expression);
+    printf("%d\t%s\t%d\n",p->NO,p->expression,p->hit);
     p=p->next;
   }
 }
@@ -128,6 +127,7 @@ bool check_watchpoints(){
       printf("old value = %u \n",p->value);
       printf("new value = %u \n",new_value);
       p->value=new_value;  
+      p->hit++;
       stop=true;    
     }
     p=p->next;
