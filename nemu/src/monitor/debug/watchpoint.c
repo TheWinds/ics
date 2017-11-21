@@ -72,22 +72,23 @@ void free_wp(WP* wp){
   }
 }
 
-int add_wp(char *expression,char** err){
-  WP* wp=new_wp();
-  Log("add_wp");
-  if(wp==NULL){
-    *err="too many watchpoints maxnum is 32";
+int add_wp(char *expression, char **err)
+{
+  bool expr_pass = false;
+  uint32_t val = expr(expression, &expr_pass);
+  if (expr_pass == false)
+  {
+    *err = "expression check failed";
     return 0;
   }
-  bool expr_pass=false;
-  uint32_t val=expr(expression,&expr_pass);  
-  if(expr_pass==false){
-    *err="expression check failed";
-    return 0;    
+  WP *wp = new_wp();
+  if (wp == NULL)
+  {
+    *err = "too many watchpoints maxnum is 32";
+    return 0;
   }
-  strcpy(wp->expression,expression);
-  wp->value=val;
-  Log("add_wp: %p => %s",wp->expression,wp->expression);
+  strcpy(wp->expression, expression);
+  wp->value = val;
   return wp->NO;
 }
 
