@@ -117,7 +117,21 @@ void show_watchpoints(){
   }
 }
 
-// bool check_watchpoints(){
-
-// }
+bool check_watchpoints(){
+  WP* p=head;
+  bool stop=false;
+  while(p!=NULL){
+    bool ok;
+    uint32_t new_value=expr(p->expression,&ok);
+    if(new_value!=p->value){
+      printf("hit watchpoint %d: %s\n",p->NO,p->expression);
+      printf("old value = %u \n",p->value);
+      printf("new value = %u \n",new_value);
+      p->value=new_value;  
+      stop=true;    
+    }
+    p=p->next;
+  }
+  return stop;
+}
 
