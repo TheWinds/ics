@@ -12,6 +12,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
     // wp_pool[i].expression="";
+    memset(wp_pool->expression,0,32*32);
     wp_pool[i].value=0;
   }
   wp_pool[NR_WP - 1].next = NULL;
@@ -78,14 +79,14 @@ int add_wp(char *expression,char** err){
     *err="too many watchpoints maxnum is 32";
     return 0;
   }
-  // bool expr_pass=false;
-  // uint32_t val=expr(expression,&expr_pass);  
-  // if(expr_pass==false){
-  //   *err="expression check failed";
-  //   return 0;    
-  // }
+  bool expr_pass=false;
+  uint32_t val=expr(expression,&expr_pass);  
+  if(expr_pass==false){
+    *err="expression check failed";
+    return 0;    
+  }
   strcpy(wp->expression,expression);
-  wp->value=0;
+  wp->value=val;
   Log("add_wp: %p => %s",wp->expression,wp->expression);
   return wp->NO;
 }
