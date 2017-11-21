@@ -111,7 +111,8 @@ static int cmd_w(char* args){
     printf("can't add watchpoint: %s\n",err);
     return 0;
   }
-  printf("add watchpoint: [ %d ]\n",no);      
+  printf("add watchpoint: [ %d ]\n",no);    
+  free(err);  
   return 0;
 }
 
