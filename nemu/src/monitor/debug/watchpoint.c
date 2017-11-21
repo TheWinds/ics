@@ -12,7 +12,6 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
     // wp_pool[i].expression="";
-    memset(wp_pool->expression,0,32*32);
     wp_pool[i].value=0;
   }
   wp_pool[NR_WP - 1].next = NULL;
@@ -75,6 +74,7 @@ void free_wp(WP* wp){
 
 int add_wp(char *expression,char** err){
   WP* wp=new_wp();
+  Log("add_wp");
   if(wp==NULL){
     *err="too many watchpoints maxnum is 32";
     return 0;
