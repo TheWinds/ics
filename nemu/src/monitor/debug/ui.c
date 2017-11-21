@@ -132,6 +132,33 @@ static int cmd_d(char* args){
   return 0;
 }
 
+static int cmd_x(char* args){
+  char *arg_n=strtok(NULL," ");
+  if(arg_n==NULL){
+    printf("usage: x [N] [ADDR EXPR]\n");
+    return 0;
+  }
+  uint32_t n = str2uint32(arg_n);
+  if(n>100) n=100;
+  char* arg_expr=strtok(NULL," ");
+  if(arg_expr==NULL){
+    printf("usage: x [N] [ADDR EXPR]\n");
+    printf("miss address expression\n");
+    return 0;
+  }
+  bool expr_pass=false;
+  uint32_t addr=expr(arg_expr,&expr_pass);
+  if(expr_pass==false){
+    printf("address expression error\n");    
+    return 0;
+  }
+  for(uint32_t i=0;i<n;i++){
+    printf("%08x: %08x\n",addr,vaddr_read((vaddr_t)addr,4));
+  }
+  printf("\n");
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -146,6 +173,7 @@ static struct {
   {"info","print registers or watchpoint information",cmd_info},
   {"w","set watch point",cmd_w},
   {"d","delete watch point",cmd_d},
+  {"x","scan memory ",cmd_x},
   {"p","expr",cmd_p},
 
   /* TODO: Add more commands */
