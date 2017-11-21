@@ -105,6 +105,9 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char* args){
+  if(args==NULL){
+    printf("usage: w [expression]\n");
+  }
   char* err=(char*)NULL;
   int no=add_wp(args,&err);
   if(err!=NULL){
