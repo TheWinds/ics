@@ -63,13 +63,15 @@ static void print_cmd_info_usage(){
     printf("info usage:\n");
     printf("  info r : print registers info \n");
     printf("  info w : print watchpointer info \n");
+    printf("\n");
 }
 
-static void print_registers_info(){
+static void show_registers_info(){
     for(int i=R_EAX;i<=R_EDI;i++){
       printf("%s: 0x%08x\n",regsl[i],reg_l(i));  
     }
     printf("%s: 0x%08x\n","eip",cpu.eip);  
+    printf("\n");    
 }
 
 static int cmd_info(char *args){
@@ -81,7 +83,7 @@ static int cmd_info(char *args){
 
   if(strcmp(arg,"r")==0){
     // print registers info 
-    print_registers_info();
+    show_registers_info();
   }
   else if(strcmp(arg,"w")==0){   
     show_watchpoints(); 
