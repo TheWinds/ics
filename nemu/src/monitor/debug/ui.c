@@ -105,10 +105,10 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char* args){
-  char err[32]="";
-  int no=add_wp(args,err);
+  char* err;
+  int no=add_wp(args,&err);
   printf("%s\n",err);
-  if(!(strcmp(err,"")==0)){
+  if(strcmp(err,"")!=0){
     printf("can't add watchpoint: %s\n",err);
     return 0;
   }
