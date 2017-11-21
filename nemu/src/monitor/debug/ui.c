@@ -134,6 +134,7 @@ static int cmd_d(char* args){
 
 static int cmd_x(char* args){
   vaddr_write(0,4,-1);
+  vaddr_write(0,5,-1);
   char *arg_n=strtok(NULL," ");
   if(arg_n==NULL){
     printf("usage: x [N] [ADDR EXPR]\n");
@@ -153,7 +154,7 @@ static int cmd_x(char* args){
     printf("address expression error\n");    
     return 0;
   }
-  if(addr+n>=128 * 1024 * 1024){
+  if(addr+n*32>=128 * 1024 * 1024){
     printf("address error %08x\n",addr);    
     printf("address range [0x00000000,0x%08x)\n",128 * 1024 * 1024);    
     return 0;
