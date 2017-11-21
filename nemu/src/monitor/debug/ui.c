@@ -152,12 +152,13 @@ static int cmd_x(char* args){
     printf("address expression error\n");    
     return 0;
   }
-  if(addr>=128 * 1024 * 1024){
-    printf("address range [0,128 * 1024 * 1024)\n");    
+  if(addr+n>=128 * 1024 * 1024){
+    printf("address error %08x\n",addr);    
+    printf("address range [0x00000000,0x%08x)\n",128 * 1024 * 1024);    
     return 0;
   }
   for(uint32_t i=0;i<n;i++){
-    printf("%08x: %08x\n",addr,vaddr_read((vaddr_t)addr,4));
+    printf("%08x: %08x\n",addr,vaddr_read(addr+i,4));
   }
   printf("\n");
   return 0;
