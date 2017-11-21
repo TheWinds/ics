@@ -105,7 +105,7 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char* args){
-  if(args==NULL){
+  if(strlen(args)==0){
     printf("usage: w [expression]\n");
   }
   char* err=(char*)NULL;
