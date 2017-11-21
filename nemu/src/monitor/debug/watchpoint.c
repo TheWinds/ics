@@ -86,7 +86,7 @@ int add_wp(char *expression,char** err){
   }
   strcpy(wp->expression,expression);
   wp->value=val;
-  // Log("add_wp: %p => %s",wp->expression,wp->expression);
+  Log("add_wp: %p => %s",wp->expression,wp->expression);
   return wp->NO;
 }
 
