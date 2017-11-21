@@ -159,7 +159,7 @@ static int cmd_x(char* args){
     return 0;
   }
   for(uint32_t i=0;i<n;i++){
-    printf("0x%08x: 0x%08x\n",addr+i,vaddr_read(addr+i,4));
+    printf("0x%08x: 0x%08x\n",addr+i*4,vaddr_read(addr+i,4));
   }
   printf("\n");
   return 0;
