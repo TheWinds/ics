@@ -162,10 +162,10 @@ static int cmd_x(char* args){
   for(uint32_t i=0;i<n;i++){
     uint32_t val=vaddr_read(addr+i*4,4);
     printf("0x%08x:",addr+i*4);
-    printf(" 0x%02x",val);
-    printf(" %02x",val>>2);
-    printf(" %02x",val>>4);
-    printf(" %02x\n",val>>6);
+    printf(" 0x%02x",(uint8_t)val);
+    printf(" %02x",(uint8_t)(val>>2));
+    printf(" %02x",(uint8_t)(val>>4));
+    printf(" %02x\n",(uint8_t)(val>>6));
   }
   printf("\n");
   return 0;
