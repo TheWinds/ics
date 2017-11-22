@@ -133,6 +133,8 @@ static int cmd_d(char* args){
 }
 
 static int cmd_x(char* args){
+  vaddr_write(0,4,-1);
+  vaddr_write(4,4,-1);
   char *arg_n=strtok(NULL," ");
   if(arg_n==NULL){
     printf("usage: x [N] [ADDR EXPR]\n");
@@ -161,9 +163,9 @@ static int cmd_x(char* args){
     uint32_t val=vaddr_read(addr+i*4,4);
     printf("0x%08x:",addr+i*4);
     printf(" 0x%02x",val);
-    printf(" 0x%02x",val>>2);
-    printf(" 0x%02x",val>>4);
-    printf(" 0x%02x\n",val>>6);
+    printf(" %02x",val>>2);
+    printf(" %02x",val>>4);
+    printf(" %02x\n",val>>6);
   }
   printf("\n");
   return 0;
