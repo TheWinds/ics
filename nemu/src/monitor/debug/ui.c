@@ -133,7 +133,7 @@ static int cmd_d(char* args){
 }
 
 static int cmd_x(char* args){
-  vaddr_write(0,4,-1);
+  vaddr_write(0,4,23333);
   vaddr_write(4,4,-1);
   char *arg_n=strtok(NULL," ");
   if(arg_n==NULL){
