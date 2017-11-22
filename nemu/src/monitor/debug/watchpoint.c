@@ -124,8 +124,8 @@ bool check_watchpoints(){
     uint32_t new_value=expr(p->expression,&ok);
     if(new_value!=p->value){
       printf("hit watchpoint %d: %s\n",p->NO,p->expression);
-      printf("old value = %u \n",p->value);
-      printf("new value = %u \n",new_value);
+      printf("old value = 0x%08x \n",p->value);
+      printf("new value = 0x%08x \n",new_value);
       p->value=new_value;  
       p->hit++;
       stop=true;    
