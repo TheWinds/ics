@@ -29,6 +29,23 @@ typedef union {
   struct{
   rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
   vaddr_t eip;
+  // EFlags register
+  union{
+      struct{
+      uint8_t CF:1;
+      // always 1
+      uint8_t one:1;
+      // not use
+      uint8_t:4;
+      uint8_t ZF:1;
+      uint8_t SF:1;
+      uint8_t:1;
+      uint8_t IF:1;
+      uint8_t:1;      
+      uint8_t OF:1;
+      };
+      rtlreg_t val;   
+    } eflags;
   };
 
 } CPU_state;
@@ -43,6 +60,7 @@ static inline int check_reg_index(int index) {
 #define reg_l(index) (cpu.gpr[check_reg_index(index)]._32)
 #define reg_w(index) (cpu.gpr[check_reg_index(index)]._16)
 #define reg_b(index) (cpu.gpr[check_reg_index(index) & 0x3]._8[index >> 2])
+#define reg_eflags() (cpu.eflags)
 
 extern const char* regsl[];
 extern const char* regsw[];
