@@ -29,16 +29,23 @@ static inline make_DopHelper(I) {
 /* sign immediate */
 static inline make_DopHelper(SI) {
   assert(op->width == 1 || op->width == 4);
-
   op->type = OP_TYPE_IMM;
-
+  if(op->width==1){
+    op->simm = (int8_t)instr_fetch(eip,op->width);
+  }else{
+    op->simm = (int)instr_fetch(eip,op->width);
+  }
   /* TODO: Use instr_fetch() to read `op->width' bytes of memory
    * pointed by `eip'. Interpret the result as a signed immediate,
    * and assign it to op->simm.
    *
+   * 111
+   * 101
+   * 111 => -1 || 7 
+   * 001 +1
    op->simm = ???
    */
-  TODO();
+  // TODO();
 
   rtl_li(&op->val, op->simm);
 
@@ -316,6 +323,10 @@ make_DHelper(push_R2s){
 make_DHelper(pop_S2r){
   // read reg index from opcode
   decode_op_r(eip,id_dest,false);
+}
+
+make_DHelper(xor_RM_r){
+  decode_op_rm(eip,id_dest,true,id_src,true);
 }
 
 void operand_write(Operand *op, rtlreg_t* src) {

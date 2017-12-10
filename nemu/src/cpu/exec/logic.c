@@ -13,8 +13,17 @@ make_EHelper(and) {
 }
 
 make_EHelper(xor) {
-  TODO();
-
+  // TODO();
+  rtl_xor(&id_dest->val,&id_dest->val,&id_src->val);
+  rtlreg_t zero=0;
+  rtl_set_CF(&zero);
+  rtl_set_OF(&zero);
+  rtl_update_ZFSF(&id_dest->val,id_src->width);
+  if(id_dest->type==OP_TYPE_REG){
+    rtl_sr(id_dest->reg,id_src->width,&id_dest->val);
+  }else{
+    rtl_sm(&id_dest->addr,id_src->width,&id_dest->val);
+  }
   print_asm_template2(xor);
 }
 

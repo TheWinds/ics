@@ -7,8 +7,9 @@ make_EHelper(add) {
 }
 
 make_EHelper(sub) {
-  TODO();
-
+  rtl_subi(&id_dest->val,&id_dest->val,id_src->simm);
+  rtl_sr(id_dest->reg,id_src->width,&id_src->val);
+  rtl_update_ZFSF(&id_dest->val,id_src->width);
   print_asm_template2(sub);
 }
 
